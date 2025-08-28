@@ -1,0 +1,8 @@
+而真做
+本地参数={
+[1]="swingKatana"
+}
+
+游戏：GetService(“玩家”)。LocalPlayer。ninjaEvent:FireServer(解包(args))
+等待(0.5)
+结束
