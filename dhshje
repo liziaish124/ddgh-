@@ -1,0 +1,137 @@
+--创建一个ScreenGui作为UI的容器
+本地ScreenGui=Instance.new("ScreenGui")
+ScreenGui.Name="ExampleUI"
+ScreenGui.Parent=游戏。本地玩家：WaitForChild("PlayerGui")
+
+--创建一个Frame作为UI的主容器
+本地大型机=Instance.new("Frame")
+MainFrame.Name="MainFrame"
+MainFrame.Size=UDim2.new(0，300，0，250)
+大型机。位置=UDim2.新建(0.5，-150，0.5，-125)--屏幕居中
+大型机。 背景颜色3=颜色3.来自RGB(45，45，45)
+MainFrame.BorderSizePixel=0
+MainFrame.Parent=ScreenGui
+
+-- 添加圆角效果
+本地UIC角=Instance.new("UIC角”)
+UICorner.CornerRadius=UDim.new(0，8)
+UICorner.Parent=MainFrame
+
+-- 创建标题
+本地titleLabel=Instance.new("TextLabel")
+TitleLabel.Name="titleLabel"
+TitleLabel.Size=UDim2.new(1，0，0，40)
+TitleLabel.Position=UDim2.new(0，0，0)
+titleLabel。BroundColor3=Color3。FromRGB(30、30、30)
+titleLabel。TextColor3=Color3。FromRGB(255，255，255)
+TitleLabel.Text="示例UI界面"
+TitleLabel.Font=枚举.Font.GothamBold
+TitleLabel.TextSize=18
+TitleLabel.Parent=MainFrame
+
+-- 添加标题的圆角效果（只影响顶部）
+本地TitleCorner=Instance.new("UICorner")
+TitleCorner.CornerRadius=UDim.new(0，8)
+TitleCorner.Parent=titleLabel
+
+-- 创建按钮
+本地ExampleButton=Instance.new("TextButton")
+ExampleButton.Name="ExampleButton"
+ExampleButton.Size=UDim2.new(0，200，0，40)
+示例按钮位置=UDim2.new(0.5，-100，0.5，-20)
+ExampleButton.BroundColor3=Color3.FromRGB(60、120、200)
+ExampleButton.TextColor3=Color3.FromRGB(255，255，255)
+ExampleButton.Text="点击我！"
+ExampleButton.Font=枚举.Font.Gotham
+ExampleButton.TextSize=16
+ExampleButton.Parent=MainFrame
+
+-- 按钮圆角
+本地ButtonCorner=Instance.new("UICorner")
+ButtonCorner.CornerRadius=UDim.new(0，6)
+ButtonCorner.Parent=示例按钮
+
+-- 创建文本标签
+本地InfoLabel=Instance.new("TextLabel")
+InfoLabel.Name="InfoLabel"
+InfoLabel.Size=UDim2.new(0，250，0，30)
+信息标签。位置=UDim2.新(0.5，-125，0.3，-15)
+InfoLabel.BackgroundTransparency=1
+信息标签。TextColor3=Color3.FromRGB(220，220，220)
+InfoLabel.Text="这是一个示例UI元素"
+InfoLabel.Font=枚举.Font.Gotham
+InfoLabel.TextSize=14
+InfoLabel.Parent=MainFrame
+
+-- 创建滑动条
+本地SliderFrame=Instance.new("Frame")
+SliderFrame.Name="SliderFrame"
+SliderFrame.Size=UDim2.new(0，250，0，40)
+SliderFrame.位置=UDim2.new(0.5、-125、0.7、-20)
+SliderFrame.BackgroundTransparency=1
+SliderFrame.Parent=MainFrame
+
+本地SliderLabel=Instance.new("TextLabel")
+SliderLabel.Name="SliderLabel"
+SliderLabel.Size=UDim2.new(1，0，0，20)
+SliderLabel.BackgroundTransparency=1
+SliderLabel.TextColor3=Color3.来自RGB(220、220、220)
+SliderLabel.Text="音量：50%"
+SliderLabel.Font=枚举.Font.Gotham
+SliderLabel.TextSize=14
+SliderLabel.Parent=SliderFrame
+
+本地滑块=Instance.new("Frame")
+Slider.Name="Slider"
+Slider.Size=UDim2.new(1，0，0，6)
+Slider.Position=UDim2.new(0，0，0.25)
+滑块。 背景颜色3=颜色3.来自RGB(80，80，80)
+Slider.BorderSizePixel=0
+Slider.Parent=SliderFrame
+
+本地SliderFill=Instance.new("Frame")
+SliderFill.Name="SliderFill"
+SliderFill.Size=UDim2.new(0.5，0，1，0)
+SliderFill.BroundColor3=Color3。FromRGB(60、120、200)
+SliderFill.BorderSizePixel=0
+SliderFill.Parent=Slider
+
+本地SliderButton=Instance.new("TextButton")
+SliderButton.Name="SliderButton"
+SliderButton.Size=UDim2.new(1，0，1，0)
+SliderButton.BackgroundTransparency=1
+SliderButton.Text=""
+SliderButton.Parent=Slider
+
+-- 添加圆角到滑动条
+本地SliderCorner=Instance.new("UICorner")
+SliderCorner.CornerRadius=UDim.new(1，0)
+SliderCorner.Parent=Slider
+
+本地SliderFillCorner=Instance.new("UICorner")
+SliderFillCorner.CornerRadius=UDim.new(1，0)
+SliderFillCorner.Parent=SliderFill
+
+-- 按钮点击事件
+ExampleButton.MouseButton1Click:Connect(函数()
+InfoLabel.Text="按钮被点击了！"
+等待(1.5)
+InfoLabel.Text="这是一个示例UI元素"
+结束)
+
+-- 滑动条交互
+局部函数updateSlider(输入)
+局部sliderPosition=math.clamp((输入.位置。X滑块。绝对位置。X)/滑块.AbsoluteSize.X，0，1)
+SliderFill.大小=UDim2.新建(sliderPosition，0，1，0)
+SliderLabel.Text="音量："..数学下限(sliderPosition*100).."%"
+结束
+
+SliderButton.MouseButton1向下：连接(函数()
+updateSlider(游戏：GetService("UserInputService")：GetMouseLocation())
+结束)
+
+游戏：GetService("UserInputService").InputChanged：连接(功能(输入)
+如果输入.UserInputType==枚举.UserInputType.MouseMovement和SliderButton:IsActive()，则
+updateSlider(输入)
+结束
+结束)
